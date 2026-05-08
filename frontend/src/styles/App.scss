@@ -1,0 +1,29 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+$custom-color: (
+    'purple': #1C0770,
+    'yellow': #F0DE36,
+    'green': #86EE60,
+    'red': #D71313,
+    'gray': #D9D9D9,
+    'content-area': #EEEEEE,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-color);
+
+@import "bootstrap/scss/bootstrap";
+
+.action_hover {
+  transition: all 0.3s ease;
+}
+
+.action_hover:hover {
+    background-color: var(--bs-purple) !important;
+    color: white !important;
+}
+
+.action_hover.active {
+  background-color: var(--bs-purple);
+  color: white;
+}
