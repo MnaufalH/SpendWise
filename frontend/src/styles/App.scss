@@ -2,12 +2,12 @@
 @import "bootstrap/scss/variables";
 
 $custom-color: (
-    'purple': #1C0770,
-    'yellow': #F0DE36,
-    'green': #86EE60,
-    'red': #D71313,
-    'gray': #D9D9D9,
-    'content-area': #EEEEEE,
+  'purple': #1C0770,
+  'yellow': #F0DE36,
+  'green': #86EE60,
+  'red': #D71313,
+  'gray': #D9D9D9,
+  'content-area': #EEEEEE,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-color);
@@ -19,11 +19,66 @@ $theme-colors: map-merge($theme-colors, $custom-color);
 }
 
 .action_hover:hover {
-    background-color: var(--bs-purple) !important;
-    color: white !important;
+  background-color: var(--bs-purple) !important;
+  color: white !important;
 }
 
-.action_hover.active {
+.active {
   background-color: var(--bs-purple);
   color: white;
+}
+
+.input-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-item>label {
+  margin-left: 12px;
+  margin-bottom: 1px;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  border-radius: 24px;
+  border: 1px solid var(--bs-purple);
+  margin-bottom: 20px;
+}
+
+.input-box>input {
+  width: 100%;
+  height: 34px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 24px;
+}  
+
+.input-box>input:focus {
+  outline: none;
+}
+
+.input-box>button {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+}  
+
+.no-arrow::-webkit-inner-spin-button,
+.no-arrow::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.suggestion_tips {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, 350px);
+  gap: 18px;
+
+  background-color: white;
+  padding: 24px;
+  border-radius: 1rem;
 }
