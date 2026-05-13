@@ -5,6 +5,8 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Suggestion from './pages/Suggestion';
 import NotFound from './pages/NotFound';
+import Transaction from './pages/Transaction';
+import Wallet from './pages/Wallet';
 
 export default function App() {
   const location = useLocation()
@@ -23,7 +25,9 @@ export default function App() {
         <Col className='bg-content-area'>
           <Routes>
             <Route path='/' element={<Dashboard />} />
+            <Route path='/transaction' element={<Transaction />} />
             <Route path='/suggestion' element={<Suggestion />} />
+            <Route path='/wallet' element={<Wallet />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </Col>

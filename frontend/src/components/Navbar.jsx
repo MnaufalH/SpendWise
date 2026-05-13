@@ -5,6 +5,7 @@ import { FiHome } from "react-icons/fi"
 import { PiArrowsLeftRightLight } from "react-icons/pi"
 import { IoWalletOutline } from "react-icons/io5"
 import { MdOutlineTipsAndUpdates } from "react-icons/md"
+import { VscAccount } from "react-icons/vsc"
 
 export default function Navbar() {
     const navigate = useNavigate()
@@ -20,44 +21,30 @@ export default function Navbar() {
     const isActive = (path) => location.pathname.split('/')[1] === path.split('/')[1]
 
     return (
-        <Stack gap={2}>
-            <header>
-                <h1 className='fs-2'>SpendWise</h1>
-            </header>
-            {
-                navbarList.map((menu) => (
-                    <button key={menu.name} className={`p-2 rounded-end-pill border-0 action_hover ${isActive(menu.path) ? 'active' : 'bg-transparent'}`} onClick={() => navigate(menu.path)}>
-                        <div className='d-flex align-items-center'>
-                            { menu.icon }
-                            <span className='ms-2'>{menu.name}</span>
-                        </div>
-                    </button>
-                ))
-            }
-            {/* <button className={`p-2 rounded-end-pill border-0 action_hover ${isActive('/') ? 'active' : 'bg-transparent'}`} onClick={() => navigate('/')}>
-                <div className='d-flex align-items-center'>
-                    <FiHome className='ms-2' />
-                    <span className='ms-2'>Dashboard</span>
-                </div>
-            </button>
-            <button className={`p-2 rounded-end-pill border-0 action_hover ${isActive('/transaction') ? 'active' : 'bg-transparent'}`} onClick={() => navigate('/transaction')}>
-                <div className='d-flex align-items-center'>
-                    <PiArrowsLeftRightLight className='ms-2' />
-                    <span className='ms-2'>Transaction</span>
-                </div>
-            </button>
-            <button className={`p-2 rounded-end-pill border-0 action_hover ${isActive('/wallet') ? 'active' : 'bg-transparent'}`} onClick={() => navigate('/wallet')}>
-                <div className='d-flex align-items-center'>
-                    <IoWalletOutline className='ms-2' />
-                    <span className='ms-2'>Wallet</span>
-                </div>
-            </button>
-            <button className={`p-2 rounded-end-pill border-0 action_hover ${isActive('/suggestion') ? 'active' : 'bg-transparent'}`} onClick={() => navigate('/suggestion')}>
-                <div className='d-flex align-items-center'>
-                    <MdOutlineTipsAndUpdates className='ms-2' />
-                    <span className='ms-2'>Suggestion</span>
-                </div>
-            </button> */}
-        </Stack>
+        <div className='h-100 d-flex flex-column justify-content-between'>
+            <Stack gap={2}>
+                <img src="navbar-logo.png" alt="SpendWise-Logo" className='w-100 my-2' />
+                {
+                    navbarList.map((menu) => (
+                        <button key={menu.name} className={`p-2 rounded-end-pill border-0 action_hover ${isActive(menu.path) ? 'active' : 'bg-transparent text-purple'}`} onClick={() => navigate(menu.path)}>
+                            <div className='d-flex align-items-center'>
+                                {menu.icon}
+                                <span className='ms-2'>{menu.name}</span>
+                            </div>
+                        </button>
+                    ))
+                }
+            </Stack>
+
+            <div className='ps-2 pb-3'>
+                <button
+                    className={`w-100 d-flex justify-content-center align-items-center gap-2 p-2 border-2 border-purple rounded-4 action_hover ${isActive('/profile') ? 'active' : 'bg-transparent text-purple'}`}
+                    onClick={() => navigate('/profile')}
+                >
+                    <VscAccount size={20} />
+                    <h2 className='m-0 fs-5 fw-normal'>Tama</h2>
+                </button>
+            </div>
+        </div>
     )
 }
