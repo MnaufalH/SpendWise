@@ -55,7 +55,7 @@ export default function Transaction() {
             return;
         }
 
-        const id = `tr-${nanoid(5)}`
+        const id = `trc-${nanoid(5)}`
         const parsedAmount = parseInt(form.amount)
 
         const newTransaction = {
@@ -99,8 +99,6 @@ export default function Transaction() {
 
 
     const saldo = wallets.reduce((total, w) => total + w.amount, 0);
-
-    console.log(budgets)
 
     return (
         <article className='p-3 w-100'>
@@ -205,7 +203,7 @@ export default function Transaction() {
 
                         <label htmlFor="descript">Keterangan Transaksi</label>
                         <input name="descript" value={form.descript} onChange={handleChange} placeholder="Keterangan" style={inputStyle} />
-                        <label htmlFor="amount">Nimonal</label>
+                        <label htmlFor="amount">Nominal</label>
                         <input name="amount" value={form.amount} onChange={handleChange} type="number" placeholder="Jumlah" style={inputStyle} />
 
                         {
@@ -255,7 +253,18 @@ export default function Transaction() {
                         </select>
 
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <button onClick={() => setShowModal(false)}>Batal</button>
+                            <button onClick={() => {
+                                setShowModal(false)
+                                setCache(null)
+                                setForm({
+                                    type: "",
+                                    descript: "",
+                                    amount: "",
+                                    category: "",
+                                    date: "",
+                                    wallet: "",
+                                })
+                            }}>Batal</button>
                             <button onClick={handleSave}>Simpan</button>
                         </div>
                     </div>
