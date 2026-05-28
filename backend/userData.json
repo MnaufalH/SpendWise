@@ -1,0 +1,49 @@
+{
+  "wallets": [
+    {
+      "id": "wlt-1",
+      "name": "BCA",
+      "amount": 100000
+    },
+    {
+      "id": "wlt-2",
+      "name": "Cash",
+      "amount": 0
+    },
+    {
+      "id": "wlt-3",
+      "name": "OVO",
+      "amount": 0
+    },
+    {
+      "id": "wlt-4",
+      "name": "Dana",
+      "amount": 0
+    },
+    {
+      "id": "wlt-298bca68",
+      "name": "Mandiri",
+      "amount": 80000
+    }
+  ],
+  "transactions": [
+    {
+      "id": "trc-9acafc0b",
+      "type": "Pengeluaran",
+      "descript": "makan",
+      "amount": -20000,
+      "category": "Makanan",
+      "date": "2026-05-29",
+      "wallet": "Mandiri"
+    },
+    {
+      "id": "trc-cf02fc29",
+      "type": "Pemasukan",
+      "descript": "uang bulanan",
+      "amount": 100000,
+      "category": "Gaji",
+      "date": "2026-05-30",
+      "wallet": "BCA"
+    }
+  ]
+}

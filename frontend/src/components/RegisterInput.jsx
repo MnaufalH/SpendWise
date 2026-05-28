@@ -12,14 +12,14 @@ export default function RegisterInput() {
     const [confirm, setConfirm] = useInput()
     const [showPass, setShowPass] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
-    
+
     const { signin } = useAppContext()
     const navigate = useNavigate()
 
-    const registHandle = (e) => {
+    const registHandle = async (e) => {
         e.preventDefault()
 
-        if (!fullName.trim() || !username.trim() || !pass.trim() || !confirm.trim()) {
+        if (!fullName.trim() || !username.trim() || !email.trim() || !pass.trim() || !confirm.trim()) {
             alert('Tolong isi semua data!')
             return
         }
@@ -29,8 +29,12 @@ export default function RegisterInput() {
             return
         }
 
-        signin(fullName, username, email, pass)
-        navigate('/')
+        try {
+            await signin(fullName, username, email, pass)
+            navigate('/')
+        } catch (error) {
+            alert(error.message)
+        }
     }
 
     return (
@@ -60,14 +64,14 @@ export default function RegisterInput() {
                     <label htmlFor="pass">Password</label>
                     <div className='input-box'>
                         <input type={showPass ? 'text' : 'password'} value={pass} onChange={setPass} required />
-                        <button onClick={() => setShowPass((prev) => !prev)}>{showPass ? <IoEyeOutline /> : <IoEyeOffOutline />}</button>
+                        <button type="button" onClick={() => setShowPass((prev) => !prev)}>{showPass ? <IoEyeOutline /> : <IoEyeOffOutline />}</button>
                     </div>
                 </div>
                 <div className="input-item">
-                    <label htmlFor="ConfirmPass">Cofirm Password</label>
+                    <label htmlFor="ConfirmPass">Confirm Password</label>
                     <div className='input-box'>
                         <input type={showConfirm ? 'text' : 'password'} value={confirm} onChange={setConfirm} required />
-                        <button onClick={() => setShowConfirm((prev) => !prev)}>{showConfirm ? <IoEyeOutline /> : <IoEyeOffOutline />}</button>
+                        <button type="button" onClick={() => setShowConfirm((prev) => !prev)}>{showConfirm ? <IoEyeOutline /> : <IoEyeOffOutline />}</button>
                     </div>
                 </div>
 

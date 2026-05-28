@@ -12,19 +12,25 @@ export default function LoginInput() {
     const navigate = useNavigate()
     const { login } = useAppContext()
 
-    const loginHandle = () => {
+    const loginHandle = async (event) => {
+        event.preventDefault()
+
         if (!email.trim() || !pass.trim()) {
             alert('Tolong isi semua kolom dengan benar!')
             return
         }
-        
+
         if (email !== 'tama@sample.com' || pass !== 'tama123') {
             alert('Salah memasukan akun percobaan')
             return
         }
 
-        login(email, pass)
-        navigate('/')
+        try {
+            await login(email, pass)
+            navigate('/')
+        } catch (error) {
+            alert(error.message)
+        }
     }
 
     return (
@@ -42,7 +48,7 @@ export default function LoginInput() {
                     <label htmlFor="pass">Password</label>
                     <div className='input-box'>
                         <input type={showPass ? 'text' : 'password'} value={pass} onChange={setPass} required />
-                        <button onClick={() => setShowPass((prev) => !prev)}>{showPass ? <IoEyeOutline /> : <IoEyeOffOutline />}</button>
+                        <button type="button" onClick={() => setShowPass((prev) => !prev)}>{showPass ? <IoEyeOutline /> : <IoEyeOffOutline />}</button>
                     </div>
                 </div>
 

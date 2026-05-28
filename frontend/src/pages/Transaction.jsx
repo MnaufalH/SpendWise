@@ -1,22 +1,24 @@
-import React, { useState } from 'react'
-import { nanoid } from "nanoid";
+import React, { useEffect, useState } from 'react'
 import { SlCompass } from "react-icons/sl"
-import useAppContext from '../contexts/AppContext';
+import useAppContext from '../contexts/AppContext'
+import { getCategories } from '../utils/api'
 
 export default function Transaction() {
-    const { budgets, transactions, wallets } = useAppContext().user
+    const { transactions, wallets } = useAppContext().user
     const { addTransactions, updateTransaction, deleteTransaction } = useAppContext()
+
     const inputStyle = {
         width: "100%",
         padding: "10px",
         marginBottom: "10px",
         borderRadius: "8px",
         border: "1px solid #ccc",
-    };
+    }
 
     const [showModal, setShowModal] = useState(false)
     const [transactionId, setTransactionId] = useState(null)
     const [cache, setCache] = useState(null)
+    const [categories, setCategories] = useState([])
     const [form, setForm] = useState({
         type: "",
         descript: "",
@@ -26,53 +28,25 @@ export default function Transaction() {
         wallet: "",
     })
 
-    const handleChange = (e) => {
-        const { name, value } = e.target
+    useEffect(() => {
+        const loadCategories = async () => {
+            if (!form.type) {
+                setCategories([])
+                return
+            }
 
-        setForm({
-            ...form,
-            [name]: value
-        })
-    }
-
-    const handleEdit = (id) => {
-        const foundedTransaction = transactions.find((transaction) => transaction.id === id)
-
-        if (!foundedTransaction) {
-            alert("Transaksi tidak ditemukan");
-            return;
+            try {
+                const result = await getCategories(form.type)
+                setCategories(result.data)
+            } catch (error) {
+                alert(error.message)
+            }
         }
 
-        setCache(foundedTransaction)
-        setForm({ ...foundedTransaction, amount: Math.abs(foundedTransaction.amount).toString() })
-        setTransactionId(id)
-        setShowModal(true)
-    }
+        loadCategories()
+    }, [form.type])
 
-    const handleSave = () => {
-        if (!form.type.trim() || !form.descript.trim() || !form.amount.trim() || !form.date.trim() || !form.wallet.trim()) {
-            alert("Isi semua data!");
-            return;
-        }
-
-        const id = `trc-${nanoid(5)}`
-        const parsedAmount = parseInt(form.amount)
-
-        const newTransaction = {
-            id, ...form,
-            amount: form.type === 'Pemasukan' ? parsedAmount : -parsedAmount
-        }
-
-        if (transactionId !== null) {
-            updateTransaction(cache, newTransaction);
-        } else {
-            addTransactions(newTransaction);
-        }
-
-        setShowModal(false)
-        setTransactionId(null)
-        setCache(null)
-
+    const resetForm = () => {
         setForm({
             type: "",
             descript: "",
@@ -83,22 +57,97 @@ export default function Transaction() {
         })
     }
 
-    const handleDelete = (id) => {
+    const handleChange = (e) => {
+        const { name, value } = e.target
+
+        setForm((prev) => {
+            if (name === "type") {
+                return {
+                    ...prev,
+                    type: value,
+                    category: ""
+                }
+            }
+
+            return {
+                ...prev,
+                [name]: value
+            }
+        })
+    }
+
+    const handleEdit = (id) => {
         const foundedTransaction = transactions.find((transaction) => transaction.id === id)
 
-        deleteTransaction(foundedTransaction)
+        if (!foundedTransaction) {
+            alert("Transaksi tidak ditemukan")
+            return
+        }
+
+        setCache(foundedTransaction)
+        setForm({ ...foundedTransaction, amount: Math.abs(foundedTransaction.amount).toString() })
+        setTransactionId(id)
+        setShowModal(true)
+    }
+
+    const handleSave = async () => {
+        if (!form.type.trim() || !form.descript.trim() || !form.amount.toString().trim() || !form.date.trim() || !form.wallet.trim()) {
+            alert("Isi semua data!")
+            return
+        }
+
+        if (!form.category.trim()) {
+            alert("Pilih category!")
+            return
+        }
+
+        const parsedAmount = parseInt(form.amount)
+
+        const newTransaction = {
+            ...form,
+            amount: parsedAmount
+        }
+
+        try {
+            if (transactionId !== null) {
+                await updateTransaction(cache, newTransaction)
+            } else {
+                await addTransactions(newTransaction)
+            }
+
+            setShowModal(false)
+            setTransactionId(null)
+            setCache(null)
+            resetForm()
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    const handleDelete = async (id) => {
+        const foundedTransaction = transactions.find((transaction) => transaction.id === id)
+
+        if (!foundedTransaction) {
+            alert("Transaksi tidak ditemukan")
+            return
+        }
+
+        try {
+            await deleteTransaction(foundedTransaction)
+        } catch (error) {
+            alert(error.message)
+        }
     }
 
     const totalIncome = transactions
         .filter((t) => t.amount > 0)
-        .reduce((a, b) => a + b.amount, 0);
+        .reduce((a, b) => a + b.amount, 0)
 
     const totalExpense = transactions
         .filter((t) => t.amount < 0)
-        .reduce((a, b) => a + b.amount, 0);
+        .reduce((a, b) => a + b.amount, 0)
 
-
-    const saldo = wallets.reduce((total, w) => total + w.amount, 0);
+    const saldo = wallets.reduce((total, w) => total + w.amount, 0)
 
     return (
         <article className='p-3 w-100'>
@@ -120,8 +169,8 @@ export default function Transaction() {
                 <button
                     className='bg-purple text-white small px-3 py-1 rounded-3 border-0'
                     onClick={() => {
-                        setShowModal(true);
-                        setTransactionId(null);
+                        setShowModal(true)
+                        setTransactionId(null)
                     }}
                 >
                     + Tambah Transaksi
@@ -203,27 +252,20 @@ export default function Transaction() {
 
                         <label htmlFor="descript">Keterangan Transaksi</label>
                         <input name="descript" value={form.descript} onChange={handleChange} placeholder="Keterangan" style={inputStyle} />
+
                         <label htmlFor="amount">Nominal</label>
                         <input name="amount" value={form.amount} onChange={handleChange} type="number" placeholder="Jumlah" style={inputStyle} />
 
                         {
-                            form.type === 'Pengeluaran' && (
+                            form.type && (
                                 <>
-                                    <label htmlFor="category">Kategory</label>
+                                    <label htmlFor="category">Category</label>
                                     <select name="category" value={form.category} onChange={handleChange} style={inputStyle}>
+                                        <option value='' disabled>Pilih category</option>
                                         {
-                                            budgets.length > 0 ? (
-                                                <>
-                                                    <option value='' disabled>Pilih Kategory</option>
-                                                    {
-                                                        budgets.map((budget) => (
-                                                            <option key={budget.name} value={budget.name}>{budget.name}</option>
-                                                        ))
-                                                    }
-                                                </>
-                                            ) : (
-                                                <option value='' disabled>Belum ada budgeting</option>
-                                            )
+                                            categories.map((category) => (
+                                                <option key={category} value={category}>{category}</option>
+                                            ))
                                         }
                                     </select>
                                 </>
@@ -238,7 +280,7 @@ export default function Transaction() {
                             {
                                 wallets.length > 0 ? (
                                     <>
-                                        <option value='' disabled>Pilih Kategory</option>
+                                        <option value='' disabled>Pilih wallet</option>
                                         {
                                             wallets.map((wallet) => (
                                                 <option key={wallet.name} value={wallet.name}>{wallet.name}</option>
@@ -256,14 +298,8 @@ export default function Transaction() {
                             <button onClick={() => {
                                 setShowModal(false)
                                 setCache(null)
-                                setForm({
-                                    type: "",
-                                    descript: "",
-                                    amount: "",
-                                    category: "",
-                                    date: "",
-                                    wallet: "",
-                                })
+                                setTransactionId(null)
+                                resetForm()
                             }}>Batal</button>
                             <button onClick={handleSave}>Simpan</button>
                         </div>
