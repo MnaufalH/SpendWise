@@ -3,6 +3,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useInput } from '../utils/utils'
 import useAppContext from '../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
+import { createUser } from '../utils/requestAPi';
 
 export default function RegisterInput() {
     const [fullName, setFullName] = useInput()
@@ -13,10 +14,10 @@ export default function RegisterInput() {
     const [showPass, setShowPass] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
     
-    const { signin } = useAppContext()
+    // const { signin } = useAppContext()
     const navigate = useNavigate()
 
-    const registHandle = (e) => {
+    const registHandle = async (e) => {
         e.preventDefault()
 
         if (!fullName.trim() || !username.trim() || !pass.trim() || !confirm.trim()) {
@@ -29,7 +30,7 @@ export default function RegisterInput() {
             return
         }
 
-        signin(fullName, username, email, pass)
+        await createUser(fullName, username, email, pass)
         navigate('/')
     }
 

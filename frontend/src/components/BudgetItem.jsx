@@ -1,6 +1,8 @@
 import React from 'react'
 import { ProgressBar } from 'react-bootstrap'
 import { FaRegEdit } from 'react-icons/fa'
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { deleteBudget } from '../utils/requestAPi';
 
 export default function BudgetItem({ item, showEditModal }) {
     const persentage = ((item.allocation - item.used) / item.allocation) * 100
@@ -12,6 +14,11 @@ export default function BudgetItem({ item, showEditModal }) {
         color = 'yellow'
     }
     else color = 'red'
+
+    const deleteHendler = () => {
+        deleteBudget(item.id)
+        window.location.reload()
+    }
 
     return (
         <div className='d-flex align-items-center justify-content-between gap-3'>
@@ -26,6 +33,9 @@ export default function BudgetItem({ item, showEditModal }) {
             </div>
             <button className='p-0 border-0 bg-transparent'>
                 <FaRegEdit size={22} onClick={() => showEditModal(item.id, true)} />
+            </button>
+            <button className='p-0 border-0 bg-transparent'>
+                <RiDeleteBin6Line size={23} className='text-red' onClick={deleteHendler} />
             </button>
         </div>
     )

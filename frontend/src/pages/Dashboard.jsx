@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ProgressBar, Spinner } from 'react-bootstrap'
 import { SlCompass } from "react-icons/sl"
-import { CiLock, CiUnlock } from "react-icons/ci"
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { FiPlus } from 'react-icons/fi'
 import { FaRegEdit } from "react-icons/fa";
 import BlockTips from '../components/BlockTips'
@@ -9,14 +9,21 @@ import BudgetItem from '../components/BudgetItem'
 import AddBudgeting from '../components/AddBudgeting'
 import EditBudgeting from '../components/EditBudgeting'
 import useAppContext from '../contexts/AppContext'
+import { getBudget, getWallet } from '../utils/requestAPi';
+import PeriodeDropdown from '../components/PeriodeDropdown';
 
 export default function Dashboard() {
-  const { budgets, wallets } = useAppContext().user
+  const { userName } = useAppContext().user
+  const [budgets, setBudgets] = useState([])
+  const [wallets, setWallets] = useState([])
 
   const [showCash, setShowCash] = useState(false)
   const [addModal, setAddModal] = useState(false)
   const [editModal, setEditModal] = useState(false)
   const [editBudgetId, setEditBudgetId] = useState('')
+
+  const [bulan, setBulan] = useState('Mei')
+  const [tahun, setTahun] = useState('2026')
 
   const showEditModal = (id, show) => {
     setEditBudgetId(id)
@@ -24,6 +31,21 @@ export default function Dashboard() {
   }
 
   const totalSaldo = wallets.reduce((acc, wallet) => acc + wallet.amount, 0)
+
+  const getBudgets = async () => {
+    const res = await getBudget(bulan, tahun)
+    setBudgets(res.data.data.budgets)
+  }
+
+  const getWallets = async () => {
+    const res = await getWallet()
+    setWallets(res.data.data.wallets)
+  }
+
+  useEffect(() => {
+    getBudgets()
+    getWallets()
+  }, [bulan, tahun])
 
   return (
     <article className='p-3'>
@@ -39,16 +61,10 @@ export default function Dashboard() {
           </div>
           <div>
             <h2 className='m-0 fs-3' style={{ height: '34px' }}>Dasboard</h2>
-            <p className='m-0'>Hallo, Tama! 🙌</p>
+            <p className='m-0'>Hallo, {userName}! 🙌</p>
           </div>
         </div>
-        <div className='bg-purple rounded-3' style={{ width: '157px' }}>
-          <div className='bg-gray d-flex flex-column p-2 rounded-3' style={{ width: '150px' }}>
-            <p className='m-0 small text-end'>Periode</p>
-            <p className='m-0 fw-bold'>Mei, 2026</p>
-            <p className='m-0'>1-31</p>
-          </div>
-        </div>
+        <PeriodeDropdown bulan={bulan} setBulan={setBulan} tahun={tahun} setTahun={setTahun} />
       </div>
 
       {/* Cash */}
@@ -61,12 +77,12 @@ export default function Dashboard() {
                 showCash ? (
                   <>
                     <p className='m-0 fs-5 fw-semibold'>Rp.{totalSaldo.toLocaleString()}</p>
-                    <button className='d-flex align-items-center bg-transparent border-0 text-white' onClick={() => setShowCash((prev) => !prev)}><CiUnlock size={20} /></button>
+                    <button className='d-flex align-items-center bg-transparent border-0 text-white' onClick={() => setShowCash((prev) => !prev)}><IoEyeOutline size={20} /></button>
                   </>
                 ) : (
                   <>
                     <p className='m-0 fs-5 fw-semibold'>Rp.*******</p>
-                    <button className='d-flex align-items-center bg-transparent border-0 text-white' onClick={() => setShowCash((prev) => !prev)}><CiLock size={20} /></button>
+                    <button className='d-flex align-items-center bg-transparent border-0 text-white' onClick={() => setShowCash((prev) => !prev)}><IoEyeOffOutline size={20} /></button>
                   </>
                 )
               }

@@ -2,28 +2,26 @@ import React, { useState } from 'react'
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useInput } from '../utils/utils'
 import useAppContext from '../contexts/AppContext';
+import { login } from '../utils/requestAPi';
 import { useNavigate } from 'react-router-dom';
 
-export default function LoginInput() {
+export default function LoginInput({ onLogin }) {
     const [email, setEmail] = useInput()
     const [pass, setPass] = useInput()
     const [showPass, setShowPass] = useState(false)
 
     const navigate = useNavigate()
-    const { login } = useAppContext()
 
-    const loginHandle = () => {
+    const loginHandle = async (e) => {
+        e.preventDefault()
         if (!email.trim() || !pass.trim()) {
             alert('Tolong isi semua kolom dengan benar!')
             return
         }
-        
-        if (email !== 'tama@sample.com' || pass !== 'tama123') {
-            alert('Salah memasukan akun percobaan')
-            return
-        }
 
-        login(email, pass)
+        const { data } = await login(email, pass)
+        
+        onLogin(data.data)
         navigate('/')
     }
 

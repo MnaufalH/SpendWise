@@ -2,10 +2,18 @@ import React, { useState } from 'react'
 import { nanoid } from "nanoid";
 import { SlCompass } from "react-icons/sl"
 import useAppContext from '../contexts/AppContext';
+import {
+    createTransaction,
+    deleteTransaction,
+    getAllBudget,
+    getTransaction,
+    getTransactionById,
+    getWallet,
+    updateTransaction
+} from '../utils/requestAPi';
+import { useEffect } from 'react';
 
 export default function Transaction() {
-    const { budgets, transactions, wallets } = useAppContext().user
-    const { addTransactions, updateTransaction, deleteTransaction } = useAppContext()
     const inputStyle = {
         width: "100%",
         padding: "10px",
@@ -13,6 +21,10 @@ export default function Transaction() {
         borderRadius: "8px",
         border: "1px solid #ccc",
     };
+
+    const [budgets, setBudgets] = useState([])
+    const [transactions, setTransactions] = useState([])
+    const [wallets, setWallets] = useState([])
 
     const [showModal, setShowModal] = useState(false)
     const [transactionId, setTransactionId] = useState(null)
@@ -35,38 +47,41 @@ export default function Transaction() {
         })
     }
 
-    const handleEdit = (id) => {
-        const foundedTransaction = transactions.find((transaction) => transaction.id === id)
-
-        if (!foundedTransaction) {
-            alert("Transaksi tidak ditemukan");
-            return;
+    const handleEdit = async (id) => {
+        try {
+            const foundedTransaction = await getTransactionById(id)
+            setCache(foundedTransaction.data.data)
+            setForm({ ...foundedTransaction.data.data, amount: Math.abs(foundedTransaction.data.data.amount).toString() })
+            setTransactionId(id)
+            setShowModal(true)
+        } catch (error) {
+            alert(error.response.data.message)
+            return
         }
 
-        setCache(foundedTransaction)
-        setForm({ ...foundedTransaction, amount: Math.abs(foundedTransaction.amount).toString() })
-        setTransactionId(id)
-        setShowModal(true)
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!form.type.trim() || !form.descript.trim() || !form.amount.trim() || !form.date.trim() || !form.wallet.trim()) {
             alert("Isi semua data!");
             return;
         }
 
-        const id = `trc-${nanoid(5)}`
         const parsedAmount = parseInt(form.amount)
 
         const newTransaction = {
-            id, ...form,
+            ...form,
             amount: form.type === 'Pemasukan' ? parsedAmount : -parsedAmount
         }
 
         if (transactionId !== null) {
-            updateTransaction(cache, newTransaction);
+            try {
+                await updateTransaction(cache, newTransaction);
+            } catch (error) {
+                console.log(error.response.data.message)
+            }
         } else {
-            addTransactions(newTransaction);
+            await createTransaction(newTransaction);
         }
 
         setShowModal(false)
@@ -81,12 +96,12 @@ export default function Transaction() {
             date: "",
             wallet: "",
         })
+        window.location.reload()
     }
 
-    const handleDelete = (id) => {
-        const foundedTransaction = transactions.find((transaction) => transaction.id === id)
-
-        deleteTransaction(foundedTransaction)
+    const handleDelete = async (id) => {
+        await deleteTransaction(id)
+        window.location.reload()
     }
 
     const totalIncome = transactions
@@ -99,6 +114,27 @@ export default function Transaction() {
 
 
     const saldo = wallets.reduce((total, w) => total + w.amount, 0);
+
+    const getBudgets = async () => {
+        const res = await getAllBudget()
+        setBudgets(res.data.data.budgets)
+    }
+
+    const getTransactions = async () => {
+        const res = await getTransaction()
+        setTransactions(res.data.data.transactions)
+    }
+
+    const getWallets = async () => {
+        const res = await getWallet()
+        setWallets(res.data.data.wallets)
+    }
+
+    useEffect(() => {
+        getBudgets()
+        getTransactions()
+        getWallets()
+    }, [])
 
     return (
         <article className='p-3 w-100'>
@@ -114,7 +150,7 @@ export default function Transaction() {
                     </div>
                     <div>
                         <h2 className='m-0 fs-3' style={{ height: '34px' }}>Transaction</h2>
-                        <p className='m-0'>Hallo, Tama! 🙌</p>
+                        <p className='m-0'>Perhatikan setiap transaksimu 👌</p>
                     </div>
                 </div>
                 <button
@@ -254,7 +290,6 @@ export default function Transaction() {
 
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <button onClick={() => {
-                                setShowModal(false)
                                 setCache(null)
                                 setForm({
                                     type: "",
@@ -264,6 +299,7 @@ export default function Transaction() {
                                     date: "",
                                     wallet: "",
                                 })
+                                setShowModal(false)
                             }}>Batal</button>
                             <button onClick={handleSave}>Simpan</button>
                         </div>
