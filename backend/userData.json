@@ -1,0 +1,118 @@
+{
+    "users": [
+        {
+            "userId": "usr-1",
+            "fullName": "Ervan Setyatama",
+            "username": "Tama",
+            "email": "contoh1@sample.com",
+            "password": "contoh1"
+        },
+        {
+            "userId": "usr-2",
+            "fullName": "Hansel sell",
+            "username": "Hansel",
+            "email": "contoh2@sample.com",
+            "password": "contoh2"
+        },
+        {
+            "userId": "usr-bylrHN1",
+            "fullName": "Sample user1",
+            "username": "user1",
+            "email": "contoh3@sample.com",
+            "password": "contoh3"
+        }
+    ],
+    "budgets": [
+        {
+            "id": "bud-1",
+            "userId": "usr-1",
+            "name": "Makan",
+            "used": 0,
+            "allocation": 0
+        },
+        {
+            "id": "bud-1",
+            "userId": "usr-2",
+            "name": "Makan",
+            "used": 0,
+            "allocation": 0
+        },
+        {
+            "id": "bud-1",
+            "userId": "usr-bylrHN1",
+            "name": "Makan",
+            "used": 0,
+            "allocation": 0
+        },
+        {
+            "id": "bud-2",
+            "name": "Transport",
+            "used": 0,
+            "acllocation": 100000,
+            "userId": "usr-bylrHN1"
+        }
+    ],
+    "wallets": [
+        {
+            "userId": "usr-1",
+            "bca": 0,
+            "cash": 0,
+            "ovo": 0,
+            "dana": 0
+        },
+        {
+            "userId": "usr-2",
+            "bca": 0,
+            "cash": 0,
+            "ovo": 0,
+            "dana": 0
+        },
+        {
+            "userId": "usr-bylrHN1",
+            "bca": 0,
+            "cash": 0,
+            "ovo": 0,
+            "dana": 0
+        }
+    ],
+    "transactions": [
+        {
+            "userId": "usr-1",
+            "type": "Pengeluaran",
+            "descript": "Makan",
+            "amount": -100000,
+            "category": "Makan",
+            "date": "2025-12-12",
+            "wallet": "BCA"
+        },
+        {
+            "userId": "usr-1",
+            "type": "Pengeluaran",
+            "descript": "Makan",
+            "amount": -100000,
+            "category": "Makan",
+            "date": "2025-12-12",
+            "wallet": "BCA"
+        }
+    ],
+    "monthlyTransactions": [
+        {
+            "userId": "usr-1",
+            "userMonthlyTransactions": []
+        },
+        {
+            "userId": "usr-2",
+            "userMonthlyTransactions": []
+        }
+    ],
+    "dailyTransactions": [
+        {
+            "userId": "usr-1",
+            "userDailyTransactions": []
+        },
+        {
+            "userId": "usr-2",
+            "userDailyTransactions": []
+        }
+    ]
+}

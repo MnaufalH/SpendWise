@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import useAppContext from '../contexts/AppContext'
 import { Spinner } from 'react-bootstrap'
+import { editBudget, getBudgetByIdentic } from '../utils/requestAPi'
 
 export default function EditBudgeting({ close, id }) {
     const { budgets } = useAppContext().user
     const { updateBudget } = useAppContext()
 
-    // const [name, setName] = useState()
-    // const [allocation, setAllocation] = useState()
     const [item, setItem] = useState({})
     const [loading, setLoading] = useState(true)
+
+    const categories = [
+        { value: 'Sewa tempat tinggal' },
+        { value: 'Pembayaran cicilan' },
+        { value: 'Asuransi' },
+        { value: 'Belanja bahan makan' },
+        { value: 'Transport' },
+        { value: 'Makan di luar' },
+        { value: 'Hiburan' },
+        { value: 'Tagihan listrik atau air' },
+        { value: 'Kesehatan' },
+        { value: 'Pendidikan' },
+        { value: 'Lainnya' }
+    ]
 
     const changeHandler = (e) => {
         const { name, value } = e.target
@@ -21,29 +34,27 @@ export default function EditBudgeting({ close, id }) {
         })
     }
 
-    const updateHandler = () => {
-        if (!item.name.trim() || !item.allocation.trim()) {
+    const updateHandler = async () => {
+        if (!item.name.trim() || item.allocation < 1) {
             alert('Semua data harus di-isi!')
             return
         }
 
-        updateBudget(item)
-        close()
+        await editBudget(item.id, item.name, item.allocation)
+        window.location.reload()
     }
 
-    const getBudgetById = () => {
-        const founded = budgets.find((budget) => budget.id === id)
-        setItem(founded)
+    const getBudgetById = async () => {
+        const founded = await getBudgetByIdentic(id)
+        setItem(founded.data.data)
     }
 
     useEffect(() => {
         setTimeout(() => {
             getBudgetById()
             setLoading(false)
-        }, 1000);
+        }, 2000);
     }, [])
-
-    console.log(item)
 
     return (
         <div className='position-fixed top-0 start-0 bg-black bg-opacity-75 w-100 h-100'>
@@ -89,13 +100,19 @@ export default function EditBudgeting({ close, id }) {
                                 <div className="input-item">
                                     <label htmlFor="name">Nama</label>
                                     <div className="input-box">
-                                        <input name='name' type="text" value={item.name} onChange={changeHandler} />
+                                        <select name='name' value={item.name || ''} onChange={changeHandler}>
+                                            {
+                                                categories.map((category) => (
+                                                    <option key={category.value} value={category.value}>{category.value}</option>
+                                                ))
+                                            }
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="input-item">
                                     <label htmlFor="nominal">Nominal</label>
                                     <div className="input-box">
-                                        <input name='allocation' type="number" className='no-arrow' value={item.allocation} onChange={changeHandler} />
+                                        <input name='allocation' type="number" className='no-arrow' value={item.allocation || ''} onChange={changeHandler} />
                                     </div>
                                 </div>
                                 <div className='d-flex justify-content-end gap-2'>

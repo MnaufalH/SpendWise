@@ -1,8 +1,19 @@
 import { SlCompass } from 'react-icons/sl'
 import useAppContext from '../contexts/AppContext'
+import { useEffect, useState } from 'react'
+import { getWallet } from '../utils/requestAPi'
 
 export default function Wallet() {
-    const { wallets } = useAppContext().user
+    const [wallets, setWallets] = useState([])
+
+    const getWallets = async () => {
+        const res = await getWallet()
+        setWallets(res.data.data.wallets)
+    }
+
+    useEffect(() => {
+        getWallets()
+    }, [wallets])
 
     return (
         <article className='p-3 w-100'>

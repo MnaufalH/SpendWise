@@ -2,10 +2,20 @@ import React from 'react'
 import { VscAccount } from 'react-icons/vsc'
 import useAppContext from '../contexts/AppContext'
 import { useNavigate } from 'react-router-dom'
+import { logout } from '../utils/requestAPi'
 
-export default function Profile() {
-    const { fullName, username, email } = useAppContext().user
-    const { logout } = useAppContext()
+export default function Profile({ onLogout }) {
+    const { fullName, userName, email } = useAppContext().user
+    // const { logout } = useAppContext()
+
+    const logoutHendler = async () => {
+        try {
+            await logout()
+            onLogout()
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
 
     const navigate = useNavigate()
     
@@ -28,7 +38,7 @@ export default function Profile() {
                         <div className="d-flex align-items-center gap-1">
                             <p className='m-0' style={{ width: '80px' }}>Username</p>
                             <p className='m-0'>:</p>
-                            <p className='m-0'>{username}</p>
+                            <p className='m-0'>{userName}</p>
                         </div>
                         <div className='bg-gray' style={{ height: '2px' }} />
                         <div className="d-flex align-items-center gap-1">
@@ -37,10 +47,7 @@ export default function Profile() {
                             <p className='m-0'>{email}</p>
                         </div>
                         <div className='bg-gray' style={{ height: '2px' }} />
-                        <button className='p-2 bg-transparent text-red border-0' onClick={() => {
-                            logout()
-                            navigate('/')
-                        }}>Logout</button>
+                        <button className='p-2 bg-transparent text-red border-0' onClick={logoutHendler}>Logout</button>
                     </div>
                 </div>
             </div>
