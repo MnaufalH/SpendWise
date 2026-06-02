@@ -1,0 +1,62 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id
+  fullName  String
+  userName  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  wallets      Wallet[]
+  transactions Transaction[]
+  budgets      Budget[]
+}
+
+model Wallet {
+  id      String @id
+  userId  String
+  name    String
+  amount  Float  @default(0.0)
+
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, name])
+}
+
+model Transaction {
+  id        String   @id
+  userId    String
+  type      String   // Pemasukan, Pengeluaran
+  descript  String
+  amount    Float
+  category  String
+  wallet    String
+  date      String   // YYYY-MM-DD format as in current backend
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Budget {
+  id         String   @id
+  userId     String
+  name       String
+  used       Float    @default(0.0)
+  allocation Float    @default(0.0)
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, name, createdAt])
+}
+
+model Authentications {
+  token String @id
+}
