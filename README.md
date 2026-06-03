@@ -6,32 +6,6 @@ Aplikasi ini merupakan bagian dari Proyek Capstone CC26.
 
 ---
 
-## 🛠️ Tech Stack & Arsitektur
-
-Aplikasi ini dirancang menggunakan arsitektur modular yang membagi sistem menjadi tiga bagian utama:
-
-1.  **Frontend (React.js + Vite)**
-    *   Menggunakan React Router, React Bootstrap, dan Bootstrap Icons.
-    *   Komunikasi API terpusat dengan Axios.
-2.  **Backend (Node.js + Express + Prisma + SQLite)**
-    *   RESTful API untuk otentikasi (JWT), manajemen dompet, transaksi, dan anggaran.
-    *   **Prisma ORM** untuk query builder dan pengelolaan database **SQLite** (`dev.db`).
-    *   Integrasi SDK **Google GenAI (Gemini)** untuk menyusun analisis finansial bulanan.
-3.  **AI Service (Python + Flask + Keras/TensorFlow)**
-    *   API Flask berjalan di port `5000` untuk melayani prediksi status keuangan bulan depan.
-    *   Menggunakan model neural network kustom dengan struktur **Residual Neural Network** (`ResidualBlock` custom layers) yang disimpan dalam format `.keras` dan di-scale menggunakan `StandardScaler` (`scaler.joblib`).
-
-```mermaid
-graph TD
-    A[React Frontend] <-->|HTTP API| B[Node.js Backend]
-    B <-->|Prisma ORM| C[(SQLite Database)]
-    B -->|Gemini SDK| D[Google Gemini API]
-    B <-->|HTTP POST /predict| E[Python Flask AI Server]
-    E -->|Keras Model & Scaler| F[Custom ML Model]
-```
-
----
-
 ## 📂 Struktur Direktori Proyek
 
 ```text
