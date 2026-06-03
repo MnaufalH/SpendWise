@@ -1,6 +1,6 @@
 # SpendWise 🪙 — AI-Powered Personal Finance Tracker
 
-SpendWise (sebelumnya PocketWise) adalah aplikasi pelacakan keuangan pribadi pintar yang membantu pengguna memantau pemasukan, pengeluaran, dompet, dan menetapkan anggaran. Aplikasi ini dilengkapi dengan asisten AI yang dapat memberikan analisis keuangan bulanan (Monthly Insights) dan memprediksi status kesehatan finansial bulan berikutnya menggunakan model Deep Learning kustom.
+SpendWise adalah aplikasi pelacakan keuangan pribadi pintar yang membantu pengguna memantau pemasukan, pengeluaran, dompet, dan menetapkan anggaran. Aplikasi ini dilengkapi dengan asisten AI yang dapat memberikan analisis keuangan bulanan (Monthly Insights) dan memprediksi status kesehatan finansial bulan berikutnya menggunakan model Deep Learning kustom.
 
 Aplikasi ini merupakan bagian dari Proyek Capstone CC26.
 
