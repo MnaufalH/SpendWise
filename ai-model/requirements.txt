@@ -1,0 +1,7 @@
+Flask==2.2.3
+joblib==1.2.0
+numpy==2.4.6
+scikit-learn==1.7.2
+h5py==3.16.0
+tensorflow==2.20.0
+keras==3.13.2
