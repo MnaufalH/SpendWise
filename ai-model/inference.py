@@ -166,7 +166,7 @@ class FinancialStatusPredictor:
                                               custom_objects=CUSTOM_OBJECTS)
         self.scaler = joblib.load(scaler_path)
 
-        print(f"✔ Model loaded  : {model_path}")
+        print(f"  Model loaded  : {model_path}")
         print(f"  Input shape   : {self.model.input_shape}")
         print(f"  Output shape  : {self.model.output_shape}")
 
