@@ -9,28 +9,36 @@ Aplikasi ini merupakan bagian dari Proyek Capstone CC26.
 ## 📂 Struktur Direktori Proyek
 
 ```text
-spendwise_branch_dev/
-├── ai-model/                   # Layanan AI (Python Flask)
-│   ├── models/                 # File model & scaler biner
-│   │   ├── model_monthly.keras # Model Keras (Deep Learning)
-│   │   └── scaler.joblib       # Scaler StandardScaler
-│   ├── venv/                   # Virtual Environment Python
-│   └── app.py                  # Endpoint API Flask
-├── backend/                    # Layanan Backend (Node.js)
-│   ├── prisma/                 # Schema & Migrasi Database
-│   │   ├── schema.prisma       # Definisi Database & Model Prisma
-│   │   └── dev.db              # Database SQLite Utama
-│   ├── src/                    # Source Code API
-│   │   ├── services/           # Service modul (auth, ai, wallets, dll)
-│   │   └── server.js           # Entry point backend
-│   └── .env                    # Variabel Lingkungan Backend
-├── frontend/                   # Layanan Frontend (React)
+SpendWise/
+├── ai-model/                     # Layanan AI (Python Flask)
+│   ├── models/                   # File model & scaler biner
+│   │   ├── model_monthly.keras   # Model Keras (Deep Learning)
+│   │   └── scaler.joblib         # Scaler StandardScaler
+│   ├── Spedwise_Modeling.ipynb   # Jupyter Notebook training model
+│   ├── inference.py              # Skrip pengujian model AI lokal
+│   ├── venv/                     # Virtual Environment Python
+│   └── app.py                    # Endpoint API Flask
+├── backend/                      # Layanan Backend (Node.js)
+│   ├── prisma/                   # Schema & Migrasi Database
+│   │   ├── schema.prisma         # Definisi Database & Model Prisma
+│   │   └── dev.db                # Database SQLite Utama
+│   ├── src/                      # Source Code API
+│   │   ├── services/             # Service modul (auth, ai, wallets, dll)
+│   │   └── server.js             # Entry point backend
+│   └── .env                      # Variabel Lingkungan Backend
+├── data/                         # Analisis Data & Dashboard Presentasi
+│   └── dashboard/                # Aplikasi Streamlit Dashboard
+│       ├── SpendWise Logo.png    # Aset Logo Aplikasi
+│       ├── dashboard.py          # Dashboard Analisis Data
+│       ├── df_clean2.csv         # Dataset utama hasil cleaning
+│       └── requirements.txt      # Dependensi Streamlit
+├── frontend/                     # Layanan Frontend (React)
 │   ├── src/
-│   │   ├── components/         # Komponen UI Reusable
-│   │   ├── pages/              # Halaman Dashboard, Transaksi, Suggestion, dll
-│   │   └── utils/              # Request API & Helper
-│   └── index.html              # Entry point HTML
-└── README.md                   # Dokumentasi Utama
+│   │   ├── components/           # Komponen UI Reusable
+│   │   ├── pages/                # Halaman Dashboard, Transaksi, Suggestion, dll
+│   │   └── utils/                # Request API & Helper
+│   └── index.html                # Entry point HTML
+└── README.md                     # Dokumentasi Utama
 ```
 
 ---
@@ -122,6 +130,24 @@ Pastikan Anda sudah menginstal:
     npm run dev
     ```
     *Aplikasi frontend dapat diakses di: `http://localhost:5173`*
+
+---
+
+### 4. Konfigurasi Dashboard Streamlit
+
+1.  Buka terminal baru dan masuk ke direktori `data/dashboard`:
+    ```bash
+    cd data/dashboard
+    ```
+2.  Instal dependensi Python yang dibutuhkan:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  Jalankan aplikasi Streamlit:
+    ```bash
+    streamlit run dashboard.py
+    ```
+    *Dashboard analitis akan berjalan di: `http://localhost:8501`*
 
 ---
 
