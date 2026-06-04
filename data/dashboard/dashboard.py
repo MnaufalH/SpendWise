@@ -50,7 +50,6 @@ MPL_MUTED   = "#333333"
 MPL_PRIMARY = "#1A1F3C"
 
 # ── SIDEBAR ───────────────────────────────────────────────────────────────────
-
 with st.sidebar:
     st.image("SpendWise Logo.png", width=180)
     st.divider()
@@ -66,16 +65,14 @@ with st.sidebar:
     st.markdown("🟡 **Moderate** — Cukup stabil, ada ruang perbaikan")
     st.markdown("🟢 **Sehat** — Finansial sehat, tabungan optimal")
 
-# ════════════════════════════════════════════════════════════════════════════
 # PAGE 1 — RINGKASAN UTAMA
-# ════════════════════════════════════════════════════════════════════════════
 
 if menu == "📊 Ringkasan Utama":
-
     col_title, col_filter = st.columns([5, 2])
     with col_title:
         st.title("📊 Financial Status Dashboard")
-        st.caption("Analisis pola keuangan berdasarkan komposisi pengeluaran & tabungan")
+        st.markdown("⚠️ Disclaimer Dataset ini diperoleh dari kaggle Indian Personal Finance and Spending Habits")
+        st.markdown("Analisis pola keuangan berdasarkan komposisi pengeluaran & tabungan")
     with col_filter:
         st.write("")
         selected_status = st.selectbox(
@@ -110,16 +107,13 @@ if menu == "📊 Ringkasan Utama":
     dominant_name  = max(dominant_feature, key=dominant_feature.get)
     dominant_value = dominant_feature[dominant_name]
 
-    savings_benchmark = {"Rentan": 8.0, "Moderate": 18.0, "Sehat": 30.0}
-    savings_diff = avg_savings - savings_benchmark[selected_status]
-    savings_delta = f"{savings_diff:+.1f}% vs benchmark"
 
     # ── KPI Cards ────────────────────────────────────────────────────────────
     k1, k2, k3, k4 = st.columns(4)
-    k1.metric("👥 Jumlah Responden", f"{total_Kategori:,}", f"Kategori {selected_status}")
-    k2.metric("💰 Rata-rata Tabungan", f"{avg_savings:.1f}%", savings_delta)
-    k3.metric("🏠 Rata-rata Sewa", f"{avg_rent:.1f}%", "dari total pendapatan", delta_color="off")
-    k4.metric("📌 Pengeluaran Dominan", dominant_name, f"{dominant_value:.1f}% dari income", delta_color="inverse")
+    k1.metric("👥 Jumlah Responden", f"{total_Kategori:,}")
+    k2.metric("💰 Rata-rata Tabungan", f"{avg_savings:.1f}%")
+    k3.metric("🏠 Rata-rata Sewa", f"{avg_rent:.1f}%")
+    k4.metric("📌 Alokasi Tertinggi ", dominant_name, f"{dominant_value:.1f}% dari total pendapatan", delta_color="normal")
 
     st.divider()
 
@@ -128,7 +122,7 @@ if menu == "📊 Ringkasan Utama":
     # ── Donut Chart ──────────────────────────────────────────────────────────
     with col_donut:
         st.subheader("🍩 Distribusi Kategori")
-        st.caption("Proporsi jumlah responden pada setiap kategori financial status.")
+        st.markdown("Proporsi jumlah responden pada setiap kategori financial status.")
 
         Kategori_count = df["Status_Label"].value_counts().reindex(["Rentan", "Moderate", "Sehat"])
         sizes  = Kategori_count.values
@@ -171,7 +165,7 @@ if menu == "📊 Ringkasan Utama":
     # ── Radar Chart ──────────────────────────────────────────────────────────
     with col_radar:
         st.subheader("🕸️ Profil Finansial Kategori")
-        st.caption("Perbandingan pola alokasi pendapatan antar Kategori.")
+        st.markdown("Perbandingan pola alokasi pendapatan antar Kategori.")
 
         radar_cols = [
             "Savings_Ratio", "Rent_Ratio", "Loan_Repayment_Ratio",
@@ -230,7 +224,7 @@ if menu == "📊 Ringkasan Utama":
     # ── Progress Bars ─────────────────────────────────────────────────────────
     st.divider()
     st.subheader(f"📊 Komposisi Alokasi Pendapatan — {selected_status}")
-    st.caption("Rata-rata proporsi alokasi pendapatan pada setiap kategori finansial.")
+    st.markdown("Rata-rata proporsi alokasi pendapatan pada setiap kategori finansial.")
 
     expense_data = {
         "💰 Tabungan":        avg_savings,
@@ -258,14 +252,11 @@ if menu == "📊 Ringkasan Utama":
 
     st.divider()
 
-
-# ════════════════════════════════════════════════════════════════════════════
 # PAGE 2 — PERTANYAAN BISNIS
-# ════════════════════════════════════════════════════════════════════════════
 
 else:
     st.title("❓ Pertanyaan Bisnis")
-    st.caption("Temukan jawaban atas pertanyaan kunci tentang pola finansial pengguna.")
+    st.markdown("Temukan jawaban atas pertanyaan kunci tentang pola finansial pengguna.")
 
     questions = [
         "1. Apa pola alokasi keuangan yang membedakan Kategori Rentan, Moderate, dan Sehat?",
@@ -278,7 +269,7 @@ else:
     # ── Q1 ────────────────────────────────────────────────────────────────────
     if q.startswith("1."):
         st.subheader("🔍 Pola Alokasi Keuangan Antar Kategori")
-        st.caption("Perbandingan rata-rata alokasi pendapatan pada setiap Kategori.")
+        st.markdown("Perbandingan rata-rata alokasi pendapatan pada setiap Kategori.")
 
         mean_Kategori = df.groupby("Status_Label")[ALL_RATIO_COLS].mean() * 100
         nice_labels  = [
@@ -337,7 +328,7 @@ else:
     # ── Q2 ────────────────────────────────────────────────────────────────────
     elif q.startswith("2."):
         st.subheader("🔥 Heatmap Korelasi Fitur")
-        st.caption("Seberapa kuat hubungan antar variabel. Nilai +1 = korelasi positif sempurna, -1 = negatif sempurna.")
+        st.markdown("Seberapa kuat hubungan antar variabel. Nilai +1 = korelasi positif sempurna, -1 = negatif sempurna.")
 
         corr_ratio_cols = [c for c in ALL_RATIO_COLS if c != "Savings_Ratio"]
         corr_cols  = corr_ratio_cols + ["Financial_Status"]
