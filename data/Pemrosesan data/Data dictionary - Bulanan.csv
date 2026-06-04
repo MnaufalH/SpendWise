@@ -1,0 +1,13 @@
+Nama Kolom,Tipe Data,Deskripsi,Status
+Rent_Ratio,Float,Persentase dari total pendapatan yang dihabiskan untuk biaya sewa tempat tinggal.,Feature
+Loan_Repayment_Ratio,Float,Persentase dari total pendapatan yang digunakan untuk membayar cicilan atau pinjaman (utang).,Feature
+Insurance_Ratio,Float,Persentase dari total pendapatan yang dialokasikan untuk membayar premi asuransi.,Feature
+Groceries_Ratio,Float,Persentase dari total pendapatan yang digunakan untuk belanja bahan makanan atau kebutuhan pokok.,Feature
+Transport_Ratio,Float,Persentase dari total pendapatan yang dihabiskan untuk biaya transportasi.,Feature
+Eating_Out_Ratio,Float,Persentase dari total pendapatan yang dihabiskan untuk biaya makan di luar (konsumtif).,Feature
+Entertainment_Ratio,Float,Persentase dari total pendapatan yang dialokasikan untuk kebutuhan hiburan.,Feature
+Utilities_Ratio,Float,"Persentase dari total pendapatan yang digunakan untuk membayar tagihan utilitas (listrik, air, internet, dll).",Feature
+Healthcare_Ratio,Float,Persentase dari total pendapatan yang disisihkan atau digunakan untuk biaya kesehatan.,Feature
+Education_Ratio,Float,Persentase dari total pendapatan yang dialokasikan untuk biaya pendidikan.,Feature
+Miscellaneous_Ratio,Float,Persentase dari total pendapatan yang digunakan untuk pengeluaran rupa-rupa atau pengeluaran lainnya yang tidak terklasifikasi.,Feature
+Financial_Status,Integer ,"Label atau kelas yang merepresentasikan tingkat kesehatan finansial pengguna (0 = Rentan, 1 = Moderate, 2 = Sehat.",Target
