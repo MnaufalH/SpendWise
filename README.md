@@ -9,7 +9,6 @@ Aplikasi ini merupakan bagian dari Proyek Capstone CC26.
 ## 📂 Struktur Direktori Proyek
 
 ```text
-```text
 SpendWise/
 ├── ai-model/                              # Layanan AI (Python Flask)
 │   ├── models/                            # File model & scaler biner
