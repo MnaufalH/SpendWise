@@ -33,7 +33,7 @@ SpendWise/
 │    │   ├── Data dictionary - Bulanan.csv # Data dictionary untuk data latih dan data test
 │    │   ├── data.csv                      # Dataset mentah yang didapat dari kaggle
 │    │   ├── df_test2.csv                  # Dataset untuk testing model
-│    │   └── df_train2.csb                 # Dataset untuk training model
+│    │   └── df_train2.csv                 # Dataset untuk training model
 |    └── dashboard/                        # Aplikasi Streamlit Dashboard
 │        ├── SpendWise Logo.png            # Aset Logo Aplikasi
 │        ├── dashboard.py                  # Dashboard Analisis Data
