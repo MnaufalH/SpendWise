@@ -34,7 +34,7 @@ SpendWise/
 │    │   ├── data.csv                      # Dataset mentah yang didapat dari kaggle
 │    │   ├── df_test2.csv                  # Dataset untuk testing model
 │    │   └── df_train2.csv                 # Dataset untuk training model
-│    │   └── Laporan Komprehensif          # Dokumen Penjelasan Pemrosesan dan Visualisasi Data
+│    │   └── Laporan Komprehensif.pdf      # Dokumen Penjelasan Pemrosesan dan Visualisasi Data
 |    └── dashboard/                        # Aplikasi Streamlit Dashboard
 │        ├── SpendWise Logo.png            # Aset Logo Aplikasi
 │        ├── dashboard.py                  # Dashboard Analisis Data
