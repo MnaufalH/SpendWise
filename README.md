@@ -31,10 +31,10 @@ SpendWise/
 |    ├── Pemrosesan data/                  # Pemrosesan data
 │    │   ├── Capstone_Project.ipynb        # Jupyter Notebook pemrosesan data
 │    │   ├── Data dictionary - Bulanan.csv # Data dictionary untuk data latih dan data test
+|    |   ├── Laporan Komprehensif.pdf      # Dokumen Penjelasan Pemrosesan dan Visualisasi Data
 │    │   ├── data.csv                      # Dataset mentah yang didapat dari kaggle
 │    │   ├── df_test2.csv                  # Dataset untuk testing model
 │    │   └── df_train2.csv                 # Dataset untuk training model
-│    │   └── Laporan Komprehensif.pdf      # Dokumen Penjelasan Pemrosesan dan Visualisasi Data
 |    └── dashboard/                        # Aplikasi Streamlit Dashboard
 │        ├── SpendWise Logo.png            # Aset Logo Aplikasi
 │        ├── dashboard.py                  # Dashboard Analisis Data
