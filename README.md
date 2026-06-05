@@ -28,7 +28,7 @@ SpendWise/
 │   │   └── server.js                      # Entry point backend
 │   └── .env                               # Variabel Lingkungan Backend
 ├── data/                                  # Analisis Data & Dashboard Presentasi
-|    └──Pemrosesan data/                   # Pemrosesan data
+|    ├──Pemrosesan data/                   # Pemrosesan data
 │    │   ├──Capstone_Project.ipynb         # Jupyter Notebook pemrosesan data
 │    │   ├──Data dictionary - Bulanan.csv  # Data dictionary untuk data latih dan data test
 │    │   ├──data.csv                       # Dataset mentah yang didapat dari kaggle
