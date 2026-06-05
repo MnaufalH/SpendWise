@@ -40,7 +40,7 @@ SpendWise/
 │        ├── dashboard.py                  # Dashboard Analisis Data
 │        ├── df_clean2.csv                 # Dataset utama hasil cleaning
 │        ├── requirements.txt              # Dependensi Streamlit
-│        └── url.txt                       # Link streamlit cloud 
+│        └── url.txt                       # Link deployment streamlit cloud 
 ├── frontend/                              # Layanan Frontend (React)
 │   ├── src/
 │   │   ├── components/                    # Komponen UI Reusable
