@@ -9,38 +9,45 @@ Aplikasi ini merupakan bagian dari Proyek Capstone CC26.
 ## 📂 Struktur Direktori Proyek
 
 ```text
+```text
 SpendWise/
-├── ai-model/                     # Layanan AI (Python Flask)
-│   ├── models/                   # File model & scaler biner
-│   │   ├── model_monthly.keras   # Model Keras (Deep Learning)
-│   │   └── scaler.joblib         # Scaler StandardScaler
-│   ├── Spedwise_Modeling.ipynb   # Jupyter Notebook training model
-│   ├── inference.py              # Skrip pengujian model AI lokal
-│   ├── venv/                     # Virtual Environment Python
-│   └── app.py                    # Endpoint API Flask
-├── backend/                      # Layanan Backend (Node.js)
-│   ├── prisma/                   # Schema & Migrasi Database
-│   │   ├── schema.prisma         # Definisi Database & Model Prisma
-│   │   └── dev.db                # Database SQLite Utama
-│   ├── src/                      # Source Code API
-│   │   ├── services/             # Service modul (auth, ai, wallets, dll)
-│   │   └── server.js             # Entry point backend
-│   └── .env                      # Variabel Lingkungan Backend
-├── data/                         # Analisis Data & Dashboard Presentasi
-│   └── dashboard/                # Aplikasi Streamlit Dashboard
-│       ├── SpendWise Logo.png    # Aset Logo Aplikasi
-│       ├── dashboard.py          # Dashboard Analisis Data
-│       ├── df_clean2.csv         # Dataset utama hasil cleaning
-│       └── requirements.txt      # Dependensi Streamlit
-├── frontend/                     # Layanan Frontend (React)
+├── ai-model/                              # Layanan AI (Python Flask)
+│   ├── models/                            # File model & scaler biner
+│   │   ├── model_monthly.keras            # Model Keras (Deep Learning)
+│   │   └── scaler.joblib                  # Scaler StandardScaler
+│   ├── Spedwise_Modeling.ipynb            # Jupyter Notebook training model
+│   ├── inference.py                       # Skrip pengujian model AI lokal
+│   ├── venv/                              # Virtual Environment Python
+│   └── app.py                             # Endpoint API Flask
+├── backend/                               # Layanan Backend (Node.js)
+│   ├── prisma/                            # Schema & Migrasi Database
+│   │   ├── schema.prisma                  # Definisi Database & Model Prisma
+│   │   └── dev.db                         # Database SQLite Utama
+│   ├── src/                               # Source Code API
+│   │   ├── services/                      # Service modul (auth, ai, wallets, dll)
+│   │   └── server.js                      # Entry point backend
+│   └── .env                               # Variabel Lingkungan Backend
+├── data/                                  # Analisis Data & Dashboard Presentasi
+|    └──Pemrosesan data/                   # Pemrosesan data
+│    │   ├──Capstone_Project.ipynb         # Jupyter Notebook pemrosesan data
+│    │   ├──Data dictionary - Bulanan.csv  # Data dictionary untuk data latih dan data test
+│    │   ├──data.csv                       # Dataset mentah yang didapat dari kaggle
+│    │   ├──df_test2.csv                   # Dataset untuk testing model
+│    │   └──df_train2.csb                  # Dataset untuk training model
+|    └── dashboard/                        # Aplikasi Streamlit Dashboard
+│        ├── SpendWise Logo.png            # Aset Logo Aplikasi
+│        ├── dashboard.py                  # Dashboard Analisis Data
+│        ├── df_clean2.csv                 # Dataset utama hasil cleaning
+│        └── requirements.txt              # Dependensi Streamlit
+│        └──url.txt                        # Link streamlit cloud 
+├── frontend/                              # Layanan Frontend (React)
 │   ├── src/
-│   │   ├── components/           # Komponen UI Reusable
-│   │   ├── pages/                # Halaman Dashboard, Transaksi, Suggestion, dll
-│   │   └── utils/                # Request API & Helper
-│   └── index.html                # Entry point HTML
-└── README.md                     # Dokumentasi Utama
+│   │   ├── components/                    # Komponen UI Reusable
+│   │   ├── pages/                         # Halaman Dashboard, Transaksi, Suggestion, dll
+│   │   └── utils/                         # Request API & Helper
+│   └── index.html                         # Entry point HTML
+└── README.md                              # Dokumentasi Utama
 ```
-
 ---
 
 ## 🚀 Panduan Instalasi & Penggunaan
