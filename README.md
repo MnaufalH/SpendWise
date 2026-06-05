@@ -28,17 +28,17 @@ SpendWise/
 │   │   └── server.js                      # Entry point backend
 │   └── .env                               # Variabel Lingkungan Backend
 ├── data/                                  # Analisis Data & Dashboard Presentasi
-|    ├──Pemrosesan data/                   # Pemrosesan data
-│    │   ├──Capstone_Project.ipynb         # Jupyter Notebook pemrosesan data
-│    │   ├──Data dictionary - Bulanan.csv  # Data dictionary untuk data latih dan data test
-│    │   ├──data.csv                       # Dataset mentah yang didapat dari kaggle
-│    │   ├──df_test2.csv                   # Dataset untuk testing model
-│    │   └──df_train2.csb                  # Dataset untuk training model
+|    ├── Pemrosesan data/                  # Pemrosesan data
+│    │   ├── Capstone_Project.ipynb        # Jupyter Notebook pemrosesan data
+│    │   ├── Data dictionary - Bulanan.csv # Data dictionary untuk data latih dan data test
+│    │   ├── data.csv                      # Dataset mentah yang didapat dari kaggle
+│    │   ├── df_test2.csv                  # Dataset untuk testing model
+│    │   └── df_train2.csb                 # Dataset untuk training model
 |    └── dashboard/                        # Aplikasi Streamlit Dashboard
 │        ├── SpendWise Logo.png            # Aset Logo Aplikasi
 │        ├── dashboard.py                  # Dashboard Analisis Data
 │        ├── df_clean2.csv                 # Dataset utama hasil cleaning
-│        └── requirements.txt              # Dependensi Streamlit
+│        ├── requirements.txt              # Dependensi Streamlit
 │        └──url.txt                        # Link streamlit cloud 
 ├── frontend/                              # Layanan Frontend (React)
 │   ├── src/
